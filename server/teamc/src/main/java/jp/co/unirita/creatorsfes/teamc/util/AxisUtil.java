@@ -1,10 +1,9 @@
 package jp.co.unirita.creatorsfes.teamc.util;
 
-import jp.co.unirita.creatorsfes.teamc.util.axis.Axis;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
+import jp.co.unirita.creatorsfes.teamc.util.axis.Axis;
 
 public class AxisUtil {
 
@@ -21,6 +20,7 @@ public class AxisUtil {
 
     private static void loadAxis() throws Exception {
         axisList = new ArrayList<>();
+        /*
         Set<String> classes = null;
         try {
             classes = FileUtil.getClassList(FileUtil.AXIS_PACKAGE_NAME);
@@ -31,6 +31,16 @@ public class AxisUtil {
             Class<?> clazz = Class.forName(className);
             Axis axis = (Axis)clazz.newInstance();
             axisList.add(axis);
-         }
+        }
+        */
+        List<String> classes = new ArrayList<>();
+        classes.add("HarfYearAxis");
+        classes.add("OverTimeMinutesAxis");
+        classes.add("QuarterYearAxis");
+        for(String className: classes) {
+            Class<?> clazz = Class.forName(FileUtil.AXIS_PACKAGE_NAME + "." + className);
+            Axis axis = (Axis)clazz.newInstance();
+            axisList.add(axis);
+        }
     }
 }

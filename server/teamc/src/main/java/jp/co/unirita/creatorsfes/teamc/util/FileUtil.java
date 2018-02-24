@@ -1,28 +1,30 @@
 package jp.co.unirita.creatorsfes.teamc.util;
 
-import jp.co.unirita.creatorsfes.teamc.model.Master;
-import jp.co.unirita.creatorsfes.teamc.model.record.Record;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.lang.invoke.MethodHandles;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.*;
+import jp.co.unirita.creatorsfes.teamc.model.Master;
+import jp.co.unirita.creatorsfes.teamc.model.record.Record;
 
 public class FileUtil {
     public static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String AXIS_PACKAGE_NAME = "jp.co.unirita.creatorsfes.teamc.util.axis";
-    private static final String PACKAGE_SEPARATOR = ".";
-    private static final String CLASS_SUFFIX = ".class";
+    //private static final String PACKAGE_SEPARATOR = ".";
+    //private static final String CLASS_SUFFIX = ".class";
 
     private static BufferedReader getBufferedReader(File file) throws Exception{
         return new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
     }
 
+    /*
     public static Set<String> getClassList(String packageName) throws IOException, URISyntaxException {
         String rootPackageName = packageName.replace(PACKAGE_SEPARATOR, File.separator);
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
@@ -51,6 +53,7 @@ public class FileUtil {
         }
         return classNames;
     }
+    */
 
     public static List<Record> loadRecordList(String fileName) throws Exception {
         File file = new File(fileName);
