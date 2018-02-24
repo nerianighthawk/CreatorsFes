@@ -20,7 +20,7 @@ public class FileUtil {
     private static final String CLASS_SUFFIX = ".class";
 
     private static BufferedReader getBufferedReader(File file) throws Exception{
-        return new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+        return new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
     }
 
     public static Set<String> getClassList(String packageName) throws IOException, URISyntaxException {
@@ -54,35 +54,39 @@ public class FileUtil {
 
     public static List<Record> loadRecordList(String fileName) throws Exception {
         File file = new File(fileName);
-        BufferedReader br = getBufferedReader(file);
-        List<Record> records = new ArrayList<>();
-        String line =  br.readLine();
-        String[] key = line.split(",");
-        while((line = br.readLine()) != null) {
-            Record record = new Record();
-            String[] values = line.split(",");
-            if(key.length != values.length) {
-                throw new RuntimeException("invalid data");
+        try (BufferedReader br = getBufferedReader(file)) {
+            List<Record> records = new ArrayList<>();
+            String line =  br.readLine();
+            String[] key = line.split(",");
+            while((line = br.readLine()) != null) {
+                Record record = new Record();
+                String[] values = line.split(",");
+                if(key.length != values.length) {
+                    throw new RuntimeException("invalid data");
+                }
+                for(int idx = 0; idx < key.length; idx++) {
+                    record.setParam(key[idx], values[idx]);
+                }
+                records.add(record);
             }
-            for(int idx = 0; idx < key.length; idx++) {
-                record.setParam(key[idx], values[idx]);
-            }
-            records.add(record);
+            logger.info("[loadRecordList] Load " + records.size() + " records.");
+            return records;
+        } finally {
         }
-        logger.info("[loadRecordList] Load " + records.size() + " records.");
-        return records;
     }
 
     public static List<Master> loadMasterData(String columnName) throws Exception{
         File file = new File("data/" + columnName + "MST.csv");
-        BufferedReader br = getBufferedReader(file);
-        List<Master> masters = new ArrayList<>();
-        String line;
-        while((line = br.readLine()) != null) {
-            String[] values = line.split(",");
-            masters.add(new Master(values[0], values[1]));
+        try (BufferedReader br = getBufferedReader(file)) {
+            List<Master> masters = new ArrayList<>();
+            String line;
+            while((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                masters.add(new Master(values[0], values[1]));
+            }
+            logger.info("[loadMasterData] Load master data of " + columnName + " " + masters.size() + " records.");
+            return masters;
+        } finally {
         }
-        logger.info("[loadMasterData] Load master data of " + columnName + " " + masters.size() + " records.");
-        return masters;
     }
 }
