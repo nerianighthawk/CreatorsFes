@@ -3,7 +3,10 @@ package jp.co.unirita.creatorsfes.teamc.model;
 import jp.co.unirita.creatorsfes.teamc.model.record.Record;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +14,8 @@ import java.util.Map;
 
 @Data
 public class Node {
+
+    public static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private String value;
     private Map<String, Node> children = null;
@@ -27,6 +32,7 @@ public class Node {
 
     public void addAxis(String columnName) {
         if(children == null) {
+            logger.info("[addAxis] value = " + value + " columnName = " + columnName);
             axis.add(columnName);
         } else {
             children.keySet().forEach(key -> children.get(key).addAxis(columnName));
@@ -65,10 +71,11 @@ public class Node {
             records = new ArrayList<>();
             tmp.forEach(records::add);
         }
+        logger.info("[nextAxis] node = " + value + " children.size = " + children.size());
     }
 
     public void close(boolean isContainRecord) {
-        nextAxis();
+        logger.info("[close] close node tree.");
         calc(isContainRecord);
     }
 

@@ -1,5 +1,6 @@
 package jp.co.unirita.creatorsfes.teamc.util;
 
+import jp.co.unirita.creatorsfes.teamc.model.Master;
 import jp.co.unirita.creatorsfes.teamc.model.record.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,10 @@ public class FileUtil {
     public static final String AXIS_PACKAGE_NAME = "jp.co.unirita.creatorsfes.teamc.util.axis";
     private static final String PACKAGE_SEPARATOR = ".";
     private static final String CLASS_SUFFIX = ".class";
+
+    private static BufferedReader getBufferedReader(File file) throws Exception{
+        return new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+    }
 
     public static Set<String> getClassList(String packageName) throws IOException, URISyntaxException {
         String rootPackageName = packageName.replace(PACKAGE_SEPARATOR, File.separator);
@@ -49,7 +54,7 @@ public class FileUtil {
 
     public static List<Record> loadRecordList(String fileName) throws Exception {
         File file = new File(fileName);
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+        BufferedReader br = getBufferedReader(file);
         List<Record> records = new ArrayList<>();
         String line =  br.readLine();
         String[] key = line.split(",");
@@ -66,5 +71,18 @@ public class FileUtil {
         }
         logger.info("[loadRecordList] Load " + records.size() + " records.");
         return records;
+    }
+
+    public static List<Master> loadMasterData(String columnName) throws Exception{
+        File file = new File("data/" + columnName + "MST.csv");
+        BufferedReader br = getBufferedReader(file);
+        List<Master> masters = new ArrayList<>();
+        String line;
+        while((line = br.readLine()) != null) {
+            String[] values = line.split(",");
+            masters.add(new Master(values[0], values[1]));
+        }
+        logger.info("[loadMasterData] Load master data of " + columnName + " " + masters.size() + " records.");
+        return masters;
     }
 }
