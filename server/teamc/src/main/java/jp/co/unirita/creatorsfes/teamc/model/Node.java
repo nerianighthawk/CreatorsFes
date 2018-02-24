@@ -70,8 +70,9 @@ public class Node {
             }
             records = new ArrayList<>();
             tmp.forEach(records::add);
+            logger.info("[nextAxis] node = " + value);
         }
-        logger.info("[nextAxis] node = " + value);
+
     }
 
     public void close(boolean isContainRecord) {

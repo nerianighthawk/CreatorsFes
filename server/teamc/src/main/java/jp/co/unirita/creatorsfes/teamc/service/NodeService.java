@@ -33,7 +33,7 @@ public class NodeService {
                 }
             }
             list.sort((s1, s2) -> s1.compareTo(s2));
-            logger.info("[execute] axis" + count + " " + String.join(". ", list));
+            logger.info("[execute] axis" + count + " =  " + String.join(". ", list));
             for(String key: list){
                 root.addAxis(params.get(key));
             }
