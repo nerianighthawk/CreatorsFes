@@ -20,8 +20,10 @@ public class SampleController {
 
     @GetMapping(value = "overtimes")
     @ResponseStatus(HttpStatus.OK)
-    public Node getovertimes(@RequestParam Map<String, String> params) throws Exception{
-        return nodeService.execute(params);
+    public Node getovertimes(
+            @RequestParam(value = "getRecord", required = true)boolean getRecord,
+            @RequestParam Map<String, String> params ) throws Exception{
+        return nodeService.execute(params, getRecord);
     }
 
     @GetMapping(value = "/masters/{columnName}")
