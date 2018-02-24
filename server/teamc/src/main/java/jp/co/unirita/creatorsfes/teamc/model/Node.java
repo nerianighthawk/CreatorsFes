@@ -32,7 +32,7 @@ public class Node {
 
     public void addAxis(String columnName) {
         if(children == null) {
-            logger.info("[addAxis] value = " + value + " columnName = " + columnName);
+            logger.info("[addAxis] columnName = " + columnName);
             axis.add(columnName);
         } else {
             children.keySet().forEach(key -> children.get(key).addAxis(columnName));
@@ -56,7 +56,7 @@ public class Node {
                     if (key.contains(":")) {
                         String[] values = key.split(":");
                         if (record.getParam(values[0]).equals(values[1])) {
-                            addChild(key, record);
+                            addChild(values[0], record);
                             use = true;
                         }
                     } else {
@@ -71,7 +71,7 @@ public class Node {
             records = new ArrayList<>();
             tmp.forEach(records::add);
         }
-        logger.info("[nextAxis] node = " + value + " children.size = " + children.size());
+        logger.info("[nextAxis] node = " + value);
     }
 
     public void close(boolean isContainRecord) {

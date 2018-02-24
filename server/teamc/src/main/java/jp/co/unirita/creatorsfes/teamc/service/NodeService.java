@@ -2,20 +2,24 @@ package jp.co.unirita.creatorsfes.teamc.service;
 
 import jp.co.unirita.creatorsfes.teamc.model.Node;
 import jp.co.unirita.creatorsfes.teamc.model.record.RecordFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.lang.invoke.MethodHandles;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class NodeService {
 
-    public Node execute(Map<String, String> params) throws Exception {
+    public static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
+    public Node execute(Map<String, String> params, boolean isContainRecord) throws Exception {
         Node root = new Node("ROOT");
         root.setRecords(RecordFactory.getRecordList());
-        boolean isContainRecord = Boolean.valueOf(params.get("getRecord"));
-        params.remove("getRecord");
 
+        params.remove("getRecord");
         checkKeyRegex(params.keySet());
         int count = 0;
         while(params.size() > 0) {
@@ -29,7 +33,7 @@ public class NodeService {
                 }
             }
             list.sort((s1, s2) -> s1.compareTo(s2));
-            System.out.println("axis " + String.join(". ", list));
+            logger.info("[execute] axis" + count + " " + String.join(". ", list));
             for(String key: list){
                 root.addAxis(params.get(key));
             }
