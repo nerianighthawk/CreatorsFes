@@ -39,7 +39,7 @@ public class Node {
 
     public void nextAxis() {
         if(children != null){
-            children.keySet().forEach(key -> children.get(key).nextAxis());
+            children.keySet().stream().map(children::get).forEach(Node::nextAxis);
         } else {
             children = new HashMap<>();
             List<Record> tmp = new ArrayList<>();
@@ -54,7 +54,7 @@ public class Node {
                             use = true;
                         }
                     } else {
-                        addChild(key, record);
+                        addChild(record.getParam(key), record);
                         use = true;
                     }
                 }
@@ -67,8 +67,9 @@ public class Node {
         }
     }
 
-    public void close() {
-        calc();
+    public void close(boolean isContainRecord) {
+        nextAxis();
+        calc(isContainRecord);
     }
 
     private void addChild(String key, Record record) {
@@ -81,36 +82,42 @@ public class Node {
         }
     }
 
-    private void calc() {
-        if(children == null) {
-            calcLeaf();
+    private void calc(boolean isContainRecord) {
+        if(children != null) {
+            children.keySet()
+                    .stream().parallel()
+                    .map(children::get).forEach(node -> node.calc(isContainRecord));
         }
         int sum = 0, count = 0;
-        for(String key: children.keySet()) {
-            sum += children.get(key).getResult().getSum();
-            count += children.get(key).getResult().getCount();
+        if(children != null) {
+            for (String key : children.keySet()) {
+                sum += children.get(key).getResult().getSum();
+                count += children.get(key).getResult().getCount();
+            }
+        }
+        for(Record record: records) {
+            sum += record.getParamAsInt("overtimeMinutes");
+            count++;
         }
         double average = sum / (double)count;
         result.setCount(count);
         result.setSum(sum);
         result.setAverage(average);
 
-        children.keySet().stream()
-                .map( key -> children.get(key).getResult())
-                .forEach(result -> {
-                    // TODO 偏差と分散と標準偏差を求める
-                });
-    }
-
-    public void calcLeaf() {
-        int sum = 0, count = 0;
-        for(Record record: records) {
-            sum += record.getParamAsInt("overtimeMinutes");
-            count++;
+        double dSum = 0;
+        if(children != null) {
+            for (String key : children.keySet()) {
+                dSum += children.get(key).getResult().getDSum();
+            }
         }
-        double average = sum / (double)records.size();
-        result.setCount(count);
-        result.setSum(sum);
-        result.setAverage(average);
+        for(Record record: records) {
+            dSum += Math.pow(record.getParamAsInt("overtimeMinutes") - result.getAverage(), 2);
+        }
+        result.setDSum(dSum);
+        result.setDispersion(dSum / result.getCount());
+        result.setStandardDeviation(Math.sqrt(result.getDispersion()));
+        if(!isContainRecord) {
+            records = null;
+        }
     }
 }

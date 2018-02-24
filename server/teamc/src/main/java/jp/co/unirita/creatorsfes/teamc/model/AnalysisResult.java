@@ -16,8 +16,8 @@ public class AnalysisResult {
     //平均
     private double average;
 
-    // 偏差
-    private double deviation;
+    // 偏差の2乗の合計
+    private double dSum;
 
     // 分散
     private double dispersion;
