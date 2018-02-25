@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import jp.co.unirita.creatorsfes.teamc.cache.MasterCache;
 import jp.co.unirita.creatorsfes.teamc.model.Master;
 import jp.co.unirita.creatorsfes.teamc.model.Node;
+import jp.co.unirita.creatorsfes.teamc.service.MasterService;
 import jp.co.unirita.creatorsfes.teamc.service.NodeService;
 
 @RestController
@@ -24,6 +24,9 @@ public class SampleController {
     @Autowired
     NodeService nodeService;
 
+    @Autowired
+    MasterService masterService;
+    
     @GetMapping(value = "overtimes")
     @ResponseStatus(HttpStatus.OK)
     public Node getovertimes(
@@ -37,6 +40,6 @@ public class SampleController {
     public List<Master> getMasterData(
             @PathVariable(value = "columnName")String columnName
     ) throws Exception {
-        return MasterCache.getMasterList(columnName);
+        return masterService.execute(columnName);
     }
 }
