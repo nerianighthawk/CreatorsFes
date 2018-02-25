@@ -51,28 +51,20 @@ public class Node {
             children.keySet().stream().map(children::get).forEach(Node::nextAxis);
         } else {
             children = new HashMap<>();
-            List<Record> tmp = new ArrayList<>();
 
             for (Record record : records) {
-                boolean use = false;
                 for (String key : axis) {
                     if (key.contains(":")) {
                         String[] values = key.split(":");
                         if (record.getParam(values[0]).equals(values[1])) {
                             addChild(values[0], values[1], record);
-                            use = true;
                         }
                     } else {
                         addChild(key, record.getParam(key), record);
-                        use = true;
                     }
-                }
-                if (!use) {
-                    tmp.add(new Record(record));
                 }
             }
             records = new ArrayList<>();
-            //tmp.forEach(records::add);
             logger.info("[nextAxis] node = " + value);
         }
     }
