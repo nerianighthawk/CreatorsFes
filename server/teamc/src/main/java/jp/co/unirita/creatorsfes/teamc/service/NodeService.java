@@ -1,11 +1,7 @@
 package jp.co.unirita.creatorsfes.teamc.service;
 
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +31,7 @@ public class NodeService {
                     list.add(key);
                 }
             }
-            list.sort((s1, s2) -> s1.compareTo(s2));
+            list.sort(Comparator.naturalOrder());
             logger.info("[execute] axis" + count + " =  " + String.join(". ", list));
             for(String key: list){
                 root.addAxis(params.get(key));

@@ -26,7 +26,7 @@ public class Node {
     public Node(String name, String value) {
         this.name = name;
         this.value = value;
-        logger.info("[Node] new node. name = " + name + " value = " + value);
+        logger.info("[Node] new node. name = " + name + ", value = " + value);
 
         this.axis = new ArrayList<>();
         this.records = new ArrayList<>();
