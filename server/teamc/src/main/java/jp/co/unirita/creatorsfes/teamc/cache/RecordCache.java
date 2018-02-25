@@ -13,7 +13,7 @@ public class RecordCache {
         if(recordList != null) {
             return recordList;
         }
-        recordList = FileUtil.loadRecordList("data/record.csv");
+        recordList = FileUtil.loadRecordList();
         return recordList;
     }
 }

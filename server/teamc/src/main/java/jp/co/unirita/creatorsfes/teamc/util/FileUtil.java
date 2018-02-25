@@ -55,8 +55,8 @@ public class FileUtil {
     }
     */
 
-    public static List<Record> loadRecordList(String fileName) throws Exception {
-        File file = new File(fileName);
+    public static List<Record> loadRecordList() throws Exception {
+        File file = new File("data/record.csv");
         try (BufferedReader br = getBufferedReader(file)) {
             List<Record> records = new ArrayList<>();
             String line =  br.readLine();
@@ -78,8 +78,8 @@ public class FileUtil {
         }
     }
 
-    public static List<Master> loadMasterData(String columnName) throws Exception{
-        File file = new File("data/" + columnName + "MST.csv");
+    public static List<Master> loadMasterData(String masterName) throws Exception{
+        File file = new File("data/" + masterName + "MST.csv");
         try (BufferedReader br = getBufferedReader(file)) {
             List<Master> masters = new ArrayList<>();
             String line;
@@ -87,7 +87,7 @@ public class FileUtil {
                 String[] values = line.split(",");
                 masters.add(new Master(values[0], values[1]));
             }
-            logger.info("[loadMasterData] Load master data of " + columnName + " " + masters.size() + " records.");
+            logger.info("[loadMasterData] Load master data of " + masterName + " " + masters.size() + " records.");
             return masters;
         } finally {
         }

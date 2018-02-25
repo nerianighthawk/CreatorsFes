@@ -1,15 +1,21 @@
 package jp.co.unirita.creatorsfes.teamc.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import jp.co.unirita.creatorsfes.teamc.cache.MasterCache;
 import jp.co.unirita.creatorsfes.teamc.model.Master;
 import jp.co.unirita.creatorsfes.teamc.model.Node;
 import jp.co.unirita.creatorsfes.teamc.service.NodeService;
-import jp.co.unirita.creatorsfes.teamc.util.FileUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/v1")
@@ -31,6 +37,6 @@ public class SampleController {
     public List<Master> getMasterData(
             @PathVariable(value = "columnName")String columnName
     ) throws Exception {
-        return FileUtil.loadMasterData(columnName);
+        return MasterCache.getMasterList(columnName);
     }
 }
