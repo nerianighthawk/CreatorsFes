@@ -15,7 +15,7 @@ import jp.co.unirita.creatorsfes.teamc.model.MasterData;
 import jp.co.unirita.creatorsfes.teamc.model.Record;
 
 public class FileUtil {
-    public static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private static BufferedReader getBufferedReader(File file) throws Exception{
         return new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));

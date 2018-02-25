@@ -13,7 +13,7 @@ import jp.co.unirita.creatorsfes.teamc.model.MasterData;
 import jp.co.unirita.creatorsfes.teamc.model.Record;
 
 public class CompanyAxis extends Axis {
-    public static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	private Map<String, String> map = new HashMap<>();
 	

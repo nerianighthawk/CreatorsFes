@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class Node {
 
-    public static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private String name;
     private String value;
