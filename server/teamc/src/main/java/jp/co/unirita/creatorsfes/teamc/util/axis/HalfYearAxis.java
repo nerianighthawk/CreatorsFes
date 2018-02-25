@@ -2,10 +2,10 @@ package jp.co.unirita.creatorsfes.teamc.util.axis;
 
 import jp.co.unirita.creatorsfes.teamc.model.record.Record;
 
-public class HarfYearAxis extends Axis {
+public class HalfYearAxis extends Axis {
 
-    public HarfYearAxis() {
-        super("harfPeripdId");
+    public HalfYearAxis() {
+        super("halfYearId");
     }
 
     @Override

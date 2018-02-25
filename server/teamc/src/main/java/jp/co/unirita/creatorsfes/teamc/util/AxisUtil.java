@@ -34,7 +34,7 @@ public class AxisUtil {
         }
         */
         List<String> classes = new ArrayList<>();
-        classes.add("HarfYearAxis");
+        classes.add("HalfYearAxis");
         classes.add("OverTimeMinutesAxis");
         classes.add("QuarterYearAxis");
         for(String className: classes) {
