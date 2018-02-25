@@ -1,14 +1,14 @@
 package jp.co.unirita.creatorsfes.teamc.model;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Record {
 
     private Map<String, String> map;
 
     public Record() {
-        map = new HashMap<>();
+        map = new TreeMap<>();
     }
 
     public Record(Record record) {

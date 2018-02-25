@@ -31,7 +31,7 @@ public class FileUtil {
                 Record record = new Record();
                 String[] values = line.split(",");
                 if (key.length != values.length) {
-                    throw new RuntimeException("invalid data");
+                    throw new RuntimeException("invalid data: " + line);
                 }
                 for (int idx = 0; idx < key.length; idx++) {
                     record.setParam(key[idx], values[idx]);
@@ -54,7 +54,7 @@ public class FileUtil {
             	MasterData master = new MasterData();
                 String[] values = line.split(",");
                 if (key.length != values.length) {
-                    throw new RuntimeException("invalid data");
+                    throw new RuntimeException("invalid data: " + line);
                 }
                 for (int idx = 0; idx < key.length; idx++) {
                 	master.setParam(key[idx], values[idx]);

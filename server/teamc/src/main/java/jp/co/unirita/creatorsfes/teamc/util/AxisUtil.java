@@ -23,8 +23,9 @@ public class AxisUtil {
             "OverTimeMinutesAxis",
             "DepartmentAxis",
             "CompanyAxis", // DepartmentAxisの後
-            "QuarterYearAxis",
-            "HalfYearAxis",
+            "MonthAxis",
+            "QuarterYearAxis", //MonthAxisの後
+            "HalfYearAxis", //MonthAxisの後
         };
         for(String className: classNames) {
             Class<?> clazz = Class.forName(AXIS_PACKAGE_NAME + "." + className);

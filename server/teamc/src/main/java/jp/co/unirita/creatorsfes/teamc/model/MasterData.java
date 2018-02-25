@@ -1,14 +1,14 @@
 package jp.co.unirita.creatorsfes.teamc.model;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class MasterData {
 
     private Map<String, String> map;
 
     public MasterData() {
-        map = new HashMap<>();
+        map = new TreeMap<>();
     }
 
     @Override
