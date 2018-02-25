@@ -20,7 +20,7 @@ public class NodeService {
     public static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     public Node execute(Map<String, String> params, boolean isContainRecord) throws Exception {
-        Node root = new Node("ROOT");
+        Node root = new Node("ROOT", null);
         root.setRecords(RecordCache.getRecordList());
 
         checkKeyRegex(params.keySet());

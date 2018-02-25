@@ -16,14 +16,18 @@ public class Node {
 
     public static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    private String name;
     private String value;
     private Map<String, Node> children = null;
     private List<Record> records;
     private List<String> axis;
     private AnalysisResult result;
 
-    public Node(String value) {
+    public Node(String name, String value) {
+        this.name = name;
         this.value = value;
+        logger.info("[Node] new node. name = " + name + " value = " + value);
+
         this.axis = new ArrayList<>();
         this.records = new ArrayList<>();
         result = new AnalysisResult();
@@ -55,11 +59,11 @@ public class Node {
                     if (key.contains(":")) {
                         String[] values = key.split(":");
                         if (record.getParam(values[0]).equals(values[1])) {
-                            addChild(values[0], record);
+                            addChild(values[0], values[1], record);
                             use = true;
                         }
                     } else {
-                        addChild(record.getParam(key), record);
+                        addChild(key, record.getParam(key), record);
                         use = true;
                     }
                 }
@@ -79,13 +83,13 @@ public class Node {
         calc(isContainRecord);
     }
 
-    private void addChild(String key, Record record) {
-        if(children.containsKey(key)) {
-            children.get(key).addRecord(new Record(record));
+    private void addChild(String name, String value, Record record) {
+        if(children.containsKey(value)) {
+            children.get(value).addRecord(new Record(record));
         } else {
-            Node node = new Node(record.getParam(key));
+            Node node = new Node(name, record.getParam(name));
             node.addRecord(new Record(record));
-            children.put(key, node);
+            children.put(value, node);
         }
     }
 
