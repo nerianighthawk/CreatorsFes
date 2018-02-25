@@ -1,6 +1,6 @@
-departmentId,departmentName
-d00000,開発部
-d00001,営業部
-d00002,人事部
-d00003,経理部
-d00004,総務部
+departmentId,departmentName,companyId
+d00000,開発部,c00000
+d00001,営業部,c00000
+d00002,人事部,c00000
+d00003,経理部,c00000
+d00004,総務部,c00000
