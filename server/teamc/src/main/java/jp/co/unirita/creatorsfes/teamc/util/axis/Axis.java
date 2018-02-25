@@ -1,10 +1,9 @@
 package jp.co.unirita.creatorsfes.teamc.util.axis;
 
-
-import jp.co.unirita.creatorsfes.teamc.model.record.Record;
-import lombok.Getter;
-
 import java.util.List;
+
+import jp.co.unirita.creatorsfes.teamc.model.Record;
+import lombok.Getter;
 
 @Getter
 public abstract class Axis {

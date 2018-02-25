@@ -1,14 +1,18 @@
 package jp.co.unirita.creatorsfes.teamc.service;
 
-import jp.co.unirita.creatorsfes.teamc.model.Node;
-import jp.co.unirita.creatorsfes.teamc.model.record.RecordFactory;
+import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.lang.invoke.MethodHandles;
-import java.util.*;
-import java.util.stream.Collectors;
+import jp.co.unirita.creatorsfes.teamc.cache.RecordCache;
+import jp.co.unirita.creatorsfes.teamc.model.Node;
 
 @Service
 public class NodeService {
@@ -17,7 +21,7 @@ public class NodeService {
 
     public Node execute(Map<String, String> params, boolean isContainRecord) throws Exception {
         Node root = new Node("ROOT");
-        root.setRecords(RecordFactory.getRecordList());
+        root.setRecords(RecordCache.getRecordList());
 
         params.remove("getRecord");
         checkKeyRegex(params.keySet());

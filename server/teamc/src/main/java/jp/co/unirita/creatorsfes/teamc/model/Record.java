@@ -1,4 +1,4 @@
-package jp.co.unirita.creatorsfes.teamc.model.record;
+package jp.co.unirita.creatorsfes.teamc.model;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +16,11 @@ public class Record {
         record.getParams().keySet().forEach( key -> {
             map.put(key, record.getParam(key));
         });
+    }
+    
+    @Override
+    public String toString() {
+    	return map.toString();
     }
 
     public Map<String, String> getParams() {

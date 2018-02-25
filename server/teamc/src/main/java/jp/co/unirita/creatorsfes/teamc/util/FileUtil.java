@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jp.co.unirita.creatorsfes.teamc.model.Master;
-import jp.co.unirita.creatorsfes.teamc.model.record.Record;
+import jp.co.unirita.creatorsfes.teamc.model.Record;
 
 public class FileUtil {
     public static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());

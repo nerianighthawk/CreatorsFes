@@ -1,10 +1,11 @@
-package jp.co.unirita.creatorsfes.teamc.model.record;
-
-import jp.co.unirita.creatorsfes.teamc.util.FileUtil;
+package jp.co.unirita.creatorsfes.teamc.cache;
 
 import java.util.List;
 
-public class RecordFactory {
+import jp.co.unirita.creatorsfes.teamc.model.Record;
+import jp.co.unirita.creatorsfes.teamc.util.FileUtil;
+
+public class RecordCache {
 
     private static List<Record> recordList = null;
 

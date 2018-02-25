@@ -1,6 +1,6 @@
 package jp.co.unirita.creatorsfes.teamc.util.axis;
 
-import jp.co.unirita.creatorsfes.teamc.model.record.Record;
+import jp.co.unirita.creatorsfes.teamc.model.Record;
 
 public class QuarterYearAxis extends Axis {
 
