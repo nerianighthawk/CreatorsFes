@@ -23,7 +23,6 @@ public class NodeService {
         Node root = new Node("ROOT");
         root.setRecords(RecordCache.getRecordList());
 
-        params.remove("getRecord");
         checkKeyRegex(params.keySet());
         int count = 0;
         while(params.size() > 0) {

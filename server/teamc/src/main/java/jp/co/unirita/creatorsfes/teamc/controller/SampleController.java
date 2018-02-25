@@ -3,6 +3,7 @@ package jp.co.unirita.creatorsfes.teamc.controller;
 import java.util.List;
 import java.util.Map;
 
+import jp.co.unirita.creatorsfes.teamc.model.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,10 +30,14 @@ public class SampleController {
     
     @GetMapping(value = "overtimes")
     @ResponseStatus(HttpStatus.OK)
-    public Node getovertimes(
-            @RequestParam(value = "getRecord", required = true)boolean getRecord,
-            @RequestParam Map<String, String> params ) throws Exception{
-        return nodeService.execute(params, getRecord);
+    public Node getovertimes(@RequestParam Map<String, String> params) throws Exception{
+        return nodeService.execute(params, false);
+    }
+
+    @GetMapping(value = "overtimes/detail")
+    @ResponseStatus(HttpStatus.OK)
+    public Node getDetail(@RequestParam Map<String, String> params) throws Exception {
+        return nodeService.execute(params, true);
     }
 
     @GetMapping(value = "/masters/{columnName}")
