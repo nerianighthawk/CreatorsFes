@@ -1,10 +1,7 @@
 package jp.co.unirita.creatorsfes.teamc.model;
 
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +18,7 @@ public class Node {
     private Map<String, Node> children = null;
     private List<Record> records;
     private List<String> axis;
+    private Map<String, Set<String>> axisValues;
     private AnalysisResult result;
 
     public Node(String name, String value) {
@@ -28,9 +26,10 @@ public class Node {
         this.value = value;
         logger.info("[Node] new node. name = " + name + ", value = " + value);
 
-        this.axis = new ArrayList<>();
         this.records = new ArrayList<>();
-        result = new AnalysisResult();
+        this.axis = new ArrayList<>();
+        this.axisValues = new LinkedHashMap<>();
+        this.result = new AnalysisResult();
     }
 
     public void addAxis(String columnName) {
@@ -47,16 +46,23 @@ public class Node {
     }
 
     private void passRecord(String axis) {
+        String key = axis;
+        Set<String> axisValue = new TreeSet<>();
         for (Record record : records) {
             if (axis.contains(":")) {
                 String[] values = axis.split(":");
+                key = values[1];
                 if (record.getParam(values[0]).equals(values[1])) {
                     addChild(values[0], values[1], record);
+                    axisValue.add(values[1]);
                 }
             } else {
                 addChild(axis, record.getParam(axis), record);
+                axisValue.add(record.getParam(axis));
             }
         }
+        axisValues.put(key, axisValue);
+        System.out.println(key);
     }
 
     public void nextAxis() {
