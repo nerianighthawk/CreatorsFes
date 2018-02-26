@@ -23,6 +23,7 @@ public class AxisUtil {
             "OverTimeMinutesAxis",
             "DepartmentAxis",
             "CompanyAxis", // DepartmentAxisの後
+            "RankAxis",
             "MonthAxis",
             "QuarterYearAxis", //MonthAxisの後
             "HalfYearAxis", //MonthAxisの後
