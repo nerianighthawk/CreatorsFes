@@ -2,7 +2,9 @@ package jp.co.unirita.creatorsfes.teamc.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import jp.co.unirita.creatorsfes.teamc.service.AxisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +28,13 @@ public class SampleController {
 
     @Autowired
     MasterService masterService;
+
+    @Autowired
+    AxisService axisService;
     
     @GetMapping(value = "overtimes")
     @ResponseStatus(HttpStatus.OK)
-    public Node getovertimes(@RequestParam Map<String, String> params) throws Exception{
+    public Node getOvertimes(@RequestParam Map<String, String> params) throws Exception{
         return nodeService.execute(params, false);
     }
 
@@ -45,5 +50,11 @@ public class SampleController {
             @PathVariable(value = "columnName")String columnName
     ) throws Exception {
         return masterService.execute(columnName);
+    }
+
+    @GetMapping(value = "axes")
+    @ResponseStatus(HttpStatus.OK)
+    public Set<String> getKeySet() throws Exception {
+        return axisService.execute();
     }
 }
