@@ -21,7 +21,7 @@ import jp.co.unirita.creatorsfes.teamc.service.NodeService;
 
 @RestController
 @RequestMapping(value = "/api/v1")
-public class SampleController {
+public class OverTimesController {
 
     @Autowired
     NodeService nodeService;
@@ -55,6 +55,12 @@ public class SampleController {
     @GetMapping(value = "axes")
     @ResponseStatus(HttpStatus.OK)
     public Set<String> getKeySet() throws Exception {
-        return axisService.execute();
+        return axisService.getAxes();
+    }
+
+    @GetMapping(value = "axes/{axis}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> getAxisValues(@PathVariable(value = "axis")String axis) throws Exception {
+        return axisService.getValues(axis);
     }
 }
