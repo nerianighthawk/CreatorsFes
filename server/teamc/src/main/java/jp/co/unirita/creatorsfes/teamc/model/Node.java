@@ -76,10 +76,10 @@ public class Node {
 
     private void addChild(String name, String value, Record record) {
         if(children.containsKey(value)) {
-            children.get(value).addRecord(new Record(record));
+            children.get(value).addRecord(record);
         } else {
             Node node = new Node(name, record.getParam(name));
-            node.addRecord(new Record(record));
+            node.addRecord(record);
             children.put(value, node);
         }
     }

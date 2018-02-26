@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import jp.co.unirita.creatorsfes.teamc.model.MasterData;
 import jp.co.unirita.creatorsfes.teamc.model.Record;
+import jp.co.unirita.creatorsfes.teamc.model.RecordImpl;
 
 public class FileUtil {
     private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -28,7 +29,7 @@ public class FileUtil {
             String line =  br.readLine();
             String[] key = line.split(",");
             while ((line = br.readLine()) != null) {
-                Record record = new Record();
+                RecordImpl record = new RecordImpl();
                 String[] values = line.split(",");
                 if (key.length != values.length) {
                     throw new RuntimeException("invalid data: " + line);

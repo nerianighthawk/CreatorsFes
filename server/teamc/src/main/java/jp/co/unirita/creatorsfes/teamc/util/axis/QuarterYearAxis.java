@@ -1,6 +1,7 @@
 package jp.co.unirita.creatorsfes.teamc.util.axis;
 
 import jp.co.unirita.creatorsfes.teamc.model.Record;
+import jp.co.unirita.creatorsfes.teamc.model.RecordImpl;
 
 public class QuarterYearAxis extends Axis {
 
@@ -9,7 +10,8 @@ public class QuarterYearAxis extends Axis {
     }
 
     @Override
-    public void classify(Record record) {
+    public void classify(Record _record) {
+    	RecordImpl record = (RecordImpl)_record;
         int month = record.getParamAsInt("month");
         if(4 <= month && month <= 6) {
             record.setParam(getAxisName(), "1");
