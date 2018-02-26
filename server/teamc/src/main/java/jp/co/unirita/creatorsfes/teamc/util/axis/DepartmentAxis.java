@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import jp.co.unirita.creatorsfes.teamc.cache.MasterCache;
 import jp.co.unirita.creatorsfes.teamc.model.MasterData;
 import jp.co.unirita.creatorsfes.teamc.model.Record;
-import jp.co.unirita.creatorsfes.teamc.model.RecordImpl;
 
 public class DepartmentAxis extends Axis {
     private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -31,14 +30,13 @@ public class DepartmentAxis extends Axis {
 	}
 
 	@Override
-    public void classify(Record _record) {
-    	RecordImpl record = (RecordImpl)_record;
+    public void classify(Record record) {
         String userId = record.getParam("userId");
         String depId = map.get(userId);
         if (depId == null) {
         	depId = "(not found)";
         }
-        record.setParam(getAxisName(), depId);
+        super.setParam(record, getAxisName(), depId);
 	}
 
 }
