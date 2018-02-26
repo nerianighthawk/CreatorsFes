@@ -34,10 +34,10 @@ public class Node {
     }
 
     public void addAxis(String columnName) {
-        if(children == null) {
+        if(children != null) {
             logger.info("[addAxis] columnName = " + columnName);
             axis.add(columnName);
-        } else {
+            passRecord(columnName);
             children.keySet().forEach(key -> children.get(key).addAxis(columnName));
         }
     }
@@ -46,25 +46,24 @@ public class Node {
         records.add(record);
     }
 
+    private void passRecord(String axis) {
+        for (Record record : records) {
+            if (axis.contains(":")) {
+                String[] values = axis.split(":");
+                if (record.getParam(values[0]).equals(values[1])) {
+                    addChild(values[0], values[1], record);
+                }
+            } else {
+                addChild(axis, record.getParam(axis), record);
+            }
+        }
+    }
+
     public void nextAxis() {
         if(children != null){
             children.keySet().stream().map(children::get).forEach(Node::nextAxis);
         } else {
             children = new HashMap<>();
-
-            for (Record record : records) {
-                for (String key : axis) {
-                    if (key.contains(":")) {
-                        String[] values = key.split(":");
-                        if (record.getParam(values[0]).equals(values[1])) {
-                            addChild(values[0], values[1], record);
-                        }
-                    } else {
-                        addChild(key, record.getParam(key), record);
-                    }
-                }
-            }
-            records = new ArrayList<>();
             logger.info("[nextAxis] node = " + value);
         }
     }
@@ -91,12 +90,6 @@ public class Node {
                     .map(children::get).forEach(node -> node.calc(isContainRecord));
         }
         int sum = 0, count = 0;
-        if(children != null) {
-            for (String key : children.keySet()) {
-                sum += children.get(key).getResult().getSum();
-                count += children.get(key).getResult().getCount();
-            }
-        }
         for(Record record: records) {
             sum += record.getParamAsInt("overtimeMinutes");
             count++;
@@ -107,11 +100,6 @@ public class Node {
         result.setAverage(average);
 
         double dSum = 0;
-        if(children != null) {
-            for (String key : children.keySet()) {
-                dSum += children.get(key).getResult().getDSum();
-            }
-        }
         for(Record record: records) {
             dSum += Math.pow(record.getParamAsInt("overtimeMinutes") - result.getAverage(), 2);
         }

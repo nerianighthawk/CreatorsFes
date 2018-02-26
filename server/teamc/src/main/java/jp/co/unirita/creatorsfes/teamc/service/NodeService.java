@@ -25,6 +25,7 @@ public class NodeService {
             if(count > 9){
                 throw new RuntimeException("NAZO");
             }
+            root.nextAxis();
             List<String> list = new ArrayList<>();
             for(String key: params.keySet()){
                 if(key.startsWith("axis" +  count)){
@@ -37,7 +38,6 @@ public class NodeService {
                 root.addAxis(params.get(key));
             }
             list.forEach(params::remove);
-            root.nextAxis();
             count++;
         }
         root.close(isContainRecord);
