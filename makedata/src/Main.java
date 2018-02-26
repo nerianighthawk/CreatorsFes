@@ -94,7 +94,7 @@ public class Main {
 			}
 		}
 		try (PrintWriter pw = FileUtil.newWriter(dataout + "/" + record)) {
-			pw.println("date,userId,attendTime,leaveTime");
+			pw.println("date,week,userId,attendTime,leaveTime");
 			for (FactInfo f : factList) {
 				pw.println(f);
 			}

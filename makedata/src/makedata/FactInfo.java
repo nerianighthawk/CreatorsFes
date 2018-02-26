@@ -1,5 +1,7 @@
 package makedata;
 
+import util.RandUtil;
+
 public class FactInfo {
 	DateInfo date;
 	UserInfo user;
@@ -23,14 +25,13 @@ public class FactInfo {
 	}
 
 	int getPretime() {
-		int min = (int)(30 * Math.random());
-		return min;
+		return RandUtil.dice(30);
 	}
 	
 	int getOvertime() {
-		int dice = (int)(1000 * Math.random());
-		int min = (int)(60 * Math.random());
-		int night = (int)((14-6) * Math.random()) + 6;
+		int dice = RandUtil.dice(1000);
+		int min = RandUtil.dice(60);
+		int night = RandUtil.dice(15-6) + 6;
 		if (dice < 250) {
 			return min/2;
 		} else if (dice < 650) {
@@ -46,8 +47,10 @@ public class FactInfo {
 		} else if (dice < 999) {
 			return 5*60 + min + 30;
 		}
-		System.out.println(night*60 + min);
-		return night*60 + min;
+		int o = night*60 + min;
+		int o2 = o + 17 * 60 + 30;
+		System.out.println(String.format("%02d:%02d", o2/60, o2%60));
+		return o;
 	}
 	
 }

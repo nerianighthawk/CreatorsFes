@@ -2,8 +2,9 @@ package makedata;
 
 import java.util.List;
 
+import util.RandUtil;
+
 public class UserInfo {
-	static String[] rankMst = { "J1", "J2", "J3", "J4", "J5", "S1", "S2", };
 	String id;
 	String name;
 	String divid;
@@ -26,12 +27,12 @@ public class UserInfo {
 	}
 	
 	String getDeptId(List<DeptInfo> deptList) {
-		int dice = (int)(deptList.size() * Math.random());
+		int dice = RandUtil.dice(deptList.size());
 		return deptList.get(dice).id;
 	}
 	
 	String getRankId(List<RankInfo> rankList) {
-		int dice = (int)(rankList.size() * Math.random());
+		int dice = RandUtil.dice(rankList.size());
 		return rankList.get(dice).name;
 	}
 	
