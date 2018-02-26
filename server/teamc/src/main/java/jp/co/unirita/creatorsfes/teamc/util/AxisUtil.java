@@ -26,6 +26,7 @@ public class AxisUtil {
             "MonthAxis",
             "QuarterYearAxis", //MonthAxisの後
             "HalfYearAxis", //MonthAxisの後
+            "YearAxis",
         };
         for(String className: classNames) {
             Class<?> clazz = Class.forName(AXIS_PACKAGE_NAME + "." + className);
