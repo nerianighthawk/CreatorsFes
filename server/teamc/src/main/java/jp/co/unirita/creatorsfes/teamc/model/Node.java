@@ -86,12 +86,13 @@ public class Node {
     }
 
     private void addChild(String name, String value, Record record) {
-        if(children.containsKey(value)) {
-            children.get(value).addRecord(record);
+        String key = name + ":" + value;
+        if(children.containsKey(key)) {
+            children.get(key).addRecord(record);
         } else {
             Node node = new Node(name, record.getParam(name));
             node.addRecord(record);
-            children.put(value, node);
+            children.put(key, node);
         }
     }
 
