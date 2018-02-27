@@ -5,7 +5,7 @@ import jp.co.unirita.creatorsfes.teamc.model.Record;
 public class QuarterYearAxis extends Axis {
 
     public QuarterYearAxis() {
-        super("quarterYearId");
+        super("quarter");
     }
 
     @Override

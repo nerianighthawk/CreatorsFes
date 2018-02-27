@@ -1,4 +1,4 @@
-userId,date,attendTime,leaveTime
+user,date,attendTime,leaveTime
 u00000,20170101,9:00,18:42
 u00000,20170102,9:00,17:50
 u00000,20170103,9:00,18:10

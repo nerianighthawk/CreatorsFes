@@ -18,7 +18,7 @@ public class CompanyAxis extends Axis {
 	private Map<String, String> map = new HashMap<>();
 	
 	public CompanyAxis() {
-        super("companyId");
+        super("company");
         try {
         	List<MasterData> list = MasterCache.getMasterList("department");
 			for (MasterData data : list) {
@@ -31,7 +31,7 @@ public class CompanyAxis extends Axis {
 
 	@Override
     public void classify(Record record) {
-        String depId = record.getParam("departmentId");
+        String depId = record.getParam("department");
         String compId = map.get(depId);
         if (compId == null) {
         	compId = "(not found)";

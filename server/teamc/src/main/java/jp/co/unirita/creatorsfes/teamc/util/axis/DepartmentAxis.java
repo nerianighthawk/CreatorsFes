@@ -18,7 +18,7 @@ public class DepartmentAxis extends Axis {
 	private Map<String, String> map = new HashMap<>();
 	
 	public DepartmentAxis() {
-        super("departmentId");
+        super("department");
         try {
         	List<MasterData> list = MasterCache.getMasterList("user");
 			for (MasterData data : list) {
@@ -31,7 +31,7 @@ public class DepartmentAxis extends Axis {
 
 	@Override
     public void classify(Record record) {
-        String userId = record.getParam("userId");
+        String userId = record.getParam("user");
         String depId = map.get(userId);
         if (depId == null) {
         	depId = "(not found)";

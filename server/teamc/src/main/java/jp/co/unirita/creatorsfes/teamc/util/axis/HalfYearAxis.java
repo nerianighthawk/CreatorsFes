@@ -5,7 +5,7 @@ import jp.co.unirita.creatorsfes.teamc.model.Record;
 public class HalfYearAxis extends Axis {
 
     public HalfYearAxis() {
-        super("halfYearId");
+        super("half");
     }
 
     @Override

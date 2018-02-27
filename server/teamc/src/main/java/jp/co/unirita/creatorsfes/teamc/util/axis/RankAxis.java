@@ -31,7 +31,7 @@ public class RankAxis extends Axis {
 
 	@Override
     public void classify(Record record) {
-        String userId = record.getParam("userId");
+        String userId = record.getParam("user");
         String rank = map.get(userId);
         if (rank == null) {
         	rank = "(not found)";
