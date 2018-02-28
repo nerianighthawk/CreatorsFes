@@ -102,15 +102,13 @@ public class Node {
                     .stream().parallel()
                     .map(children::get).forEach(node -> node.calc(isContainRecord));
         }
-        int sum = 0, count = 0;
+        int sum = 0;
         for(Record record: records) {
             sum += record.getParamAsInt("overtimeMinutes");
-            count++;
         }
-        double average = sum / (double)count;
-        result.setCount(count);
+        result.setCount(records.size());
         result.setSum(sum);
-        result.setAverage(average);
+        result.setAverage(result.getSum() / result.getCount());
 
         double dSum = 0;
         for(Record record: records) {
