@@ -108,7 +108,7 @@ public class Node {
         }
         result.setCount(records.size());
         result.setSum(sum);
-        result.setAverage(result.getSum() / result.getCount());
+        result.setAverage(result.getSum() / (double)result.getCount());
 
         double dSum = 0;
         for(Record record: records) {
