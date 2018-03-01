@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import jp.co.unirita.creatorsfes.teamc.model.Master;
-import jp.co.unirita.creatorsfes.teamc.model.Node;
+import jp.co.unirita.creatorsfes.teamc.model.NodeData;
 import jp.co.unirita.creatorsfes.teamc.service.MasterService;
 import jp.co.unirita.creatorsfes.teamc.service.NodeService;
 
@@ -34,13 +34,13 @@ public class OverTimesController {
     
     @GetMapping(value = "overtimes")
     @ResponseStatus(HttpStatus.OK)
-    public Node getOvertimes(@RequestParam Map<String, String> params) throws Exception{
+    public NodeData getOvertimes(@RequestParam Map<String, String> params) throws Exception{
         return nodeService.execute(params, false);
     }
 
     @GetMapping(value = "overtimes/detail")
     @ResponseStatus(HttpStatus.OK)
-    public Node getDetail(@RequestParam Map<String, String> params) throws Exception {
+    public NodeData getDetail(@RequestParam Map<String, String> params) throws Exception {
         return nodeService.execute(params, true);
     }
 

@@ -13,15 +13,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import jp.co.unirita.creatorsfes.teamc.cache.RecordCache;
-import jp.co.unirita.creatorsfes.teamc.model.Node;
+import jp.co.unirita.creatorsfes.teamc.model.NodeData;
 
 @Service
 public class NodeService {
 
     private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    public Node execute(Map<String, String> params, boolean isContainRecord) throws Exception {
-        Node root = new Node("ROOT", null);
+    public NodeData execute(Map<String, String> params, boolean isContainRecord) throws Exception {
+        NodeData root = new NodeData("ROOT", null);
         root.setRecords(RecordCache.getRecordList());
 
         checkKeyRegex(params.keySet());

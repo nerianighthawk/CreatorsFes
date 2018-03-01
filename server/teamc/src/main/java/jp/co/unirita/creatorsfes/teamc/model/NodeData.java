@@ -15,19 +15,19 @@ import org.slf4j.LoggerFactory;
 import lombok.Data;
 
 @Data
-public class Node {
+public class NodeData {
 
     private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private String name;
     private String value;
-    private Map<String, Node> children = null;
+    private Map<String, NodeData> children = null;
     private List<Record> records;
     private List<String> axis;
     private Map<String, Set<String>> axisValues;
     private AnalysisResult result;
 
-    public Node(String name, String value) {
+    public NodeData(String name, String value) {
         this.name = name;
         this.value = value;
         logger.info("[Node] new node. name = " + name + ", value = " + value);
@@ -73,7 +73,7 @@ public class Node {
 
     public void nextAxis() {
         if(children != null){
-            children.keySet().stream().map(children::get).forEach(Node::nextAxis);
+            children.keySet().stream().map(children::get).forEach(NodeData::nextAxis);
         } else {
             children = new HashMap<>();
             logger.info("[nextAxis] node = " + value);
@@ -87,9 +87,9 @@ public class Node {
 
     private void addChild(String name, String value, Record record) {
         String key = name + ":" + value;
-        Node node = children.get(key);
+        NodeData node = children.get(key);
         if (node == null) {
-            node = new Node(name, record.getParam(name));
+            node = new NodeData(name, record.getParam(name));
             children.put(key, node);
         }
         node.addRecord(record);
