@@ -2,11 +2,11 @@ package jp.co.unirita.creatorsfes.teamc.model;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.slf4j.Logger;
@@ -75,7 +75,7 @@ public class NodeData {
         if(children != null){
             children.keySet().stream().map(children::get).forEach(NodeData::nextAxis);
         } else {
-            children = new HashMap<>();
+            children = new TreeMap<>();
             logger.info("[nextAxis] node = " + value);
         }
     }
