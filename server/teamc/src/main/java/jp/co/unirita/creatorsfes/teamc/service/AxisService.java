@@ -15,13 +15,13 @@ public class AxisService {
         return RecordCache.getRecordList().get(0).keySet();
     }
 
-    public List<String> getValues(String axis) throws Exception {
+    public List<String> getValues(String axisName) throws Exception {
         Set<String> axes = getAxes();
-        if(!axes.contains(axis)) {
-            throw new RuntimeException("axis " + axis + " is not found.");
+        if(!axes.contains(axisName)) {
+            throw new RuntimeException("axis " + axisName + " is not found.");
         }
         return RecordCache.getRecordList().stream()
-                .map(r -> r.getParam(axis))
+                .map(r -> r.getParam(axisName))
                 .distinct().sorted().collect(Collectors.toList());
     }
 }

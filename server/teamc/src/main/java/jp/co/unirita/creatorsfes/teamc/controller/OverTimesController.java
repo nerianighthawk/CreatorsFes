@@ -58,9 +58,9 @@ public class OverTimesController {
         return axisService.getAxes();
     }
 
-    @GetMapping(value = "axes/{axis}")
+    @GetMapping(value = "axes/{axisName}")
     @ResponseStatus(HttpStatus.OK)
-    public List<String> getAxisValues(@PathVariable(value = "axis")String axis) throws Exception {
-        return axisService.getValues(axis);
+    public List<String> getAxisValues(@PathVariable(value = "axisName")String axisName) throws Exception {
+        return axisService.getValues(axisName);
     }
 }
