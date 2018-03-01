@@ -87,13 +87,12 @@ public class Node {
 
     private void addChild(String name, String value, Record record) {
         String key = name + ":" + value;
-        if(children.containsKey(key)) {
-            children.get(key).addRecord(record);
-        } else {
-            Node node = new Node(name, record.getParam(name));
-            node.addRecord(record);
+        Node node = children.get(key);
+        if (node == null) {
+            node = new Node(name, record.getParam(name));
             children.put(key, node);
         }
+        node.addRecord(record);
     }
 
     private void calc(boolean isContainRecord) {
