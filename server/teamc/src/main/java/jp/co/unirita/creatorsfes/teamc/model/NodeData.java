@@ -19,21 +19,21 @@ public class NodeData {
 
     private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    private String name;
-    private String value;
+    private String axisName;
+    private String axisValue;
     private Map<String, NodeData> children = null;
     private List<Record> records;
-    private List<String> axis;
+    private List<String> axisNames;
     private Map<String, Set<String>> axisValues;
     private AnalysisResult result;
 
-    public NodeData(String name, String value) {
-        this.name = name;
-        this.value = value;
-        logger.info("[Node] new node. name = " + name + ", value = " + value);
+    public NodeData(String axisName, String axisValue) {
+        this.axisName = axisName;
+        this.axisValue = axisValue;
+        logger.info("[Node] new node. axisName = " + axisName + ", axisValue = " + axisValue);
 
         this.records = new ArrayList<>();
-        this.axis = new ArrayList<>();
+        this.axisNames = new ArrayList<>();
         this.axisValues = new LinkedHashMap<>();
         this.result = new AnalysisResult();
     }
@@ -41,7 +41,7 @@ public class NodeData {
     public void addAxis(String columnName) {
         if(children != null) {
             logger.info("[addAxis] columnName = " + columnName);
-            axis.add(columnName);
+            axisNames.add(columnName);
             passRecord(columnName);
             children.keySet().forEach(key -> children.get(key).addAxis(columnName));
         }
@@ -76,7 +76,7 @@ public class NodeData {
             children.keySet().stream().map(children::get).forEach(NodeData::nextAxis);
         } else {
             children = new TreeMap<>();
-            logger.info("[nextAxis] node = " + value);
+            logger.info("[nextAxis] node = " + axisValue);
         }
     }
 
