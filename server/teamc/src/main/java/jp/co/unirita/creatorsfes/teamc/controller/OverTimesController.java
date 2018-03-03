@@ -44,6 +44,16 @@ public class OverTimesController {
         return nodeService.execute(params, true);
     }
 
+    @GetMapping(value = "overtimes/pileup")
+    @ResponseStatus(HttpStatus.OK)
+    public Map<String, List<Double>> getPileupOvertimes(
+            @RequestParam(name = "set") int set,
+            @RequestParam Map<String, String> params
+    )throws Exception {
+        params.remove("set");
+        return nodeService.pileUp(set, params);
+    }
+
     @GetMapping(value = "/masters/{masterName}")
     @ResponseStatus(HttpStatus.OK)
     public List<Master> getMasterData(

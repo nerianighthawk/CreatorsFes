@@ -1,12 +1,7 @@
 package jp.co.unirita.creatorsfes.teamc.service;
 
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +44,32 @@ public class NodeService {
         return root;
     }
 
+    public Map<String, List<Double>> pileUp(int set, Map<String, String> params) throws Exception {
+        checkParams(params);
+        params.put("axis10", "month");
+        NodeData root = execute(params, false);
+
+        Map<String, List<Double>> result = new TreeMap<>();
+        Map<String, NodeData> children = root.getChildren();
+        for (String key : children.keySet()) {
+            if(key.startsWith("month")){
+                continue;
+            }
+            Map<String, NodeData> data = children.get(key).getChildren();
+            List<Double> list = new ArrayList<>();
+            for (int i = 0; i < 12; i++) {
+                int month = (3 + i) % 12 + 1;
+                double average = data.get(String.format("month:%02d", month)).getResult().getAverage();
+                if(i % set > 0){
+                    average += list.get(i-1);
+                }
+                list.add(average);
+            }
+            result.put(key, list);
+        }
+        return result;
+    }
+
     private void checkKeyRegex(Set<String> keySet) {
         keySet.forEach(key -> {
             if(!key.matches("^axis[0-9]{2}$")){
@@ -57,11 +78,19 @@ public class NodeService {
         });
     }
 
-    public static void main(String[] args) {
-        Set<String> set = new HashSet<>();
-        set.add("axis00");
-        set.add("axis67");
-        set.add("axis99");
-        new NodeService().checkKeyRegex(set);
+    private void checkParams(Map<String, String> params) {
+        if(params.size() > 3) {
+            throw new RuntimeException("too many params. size = " + params.size());
+        }
+        params.keySet().forEach(key -> {
+            if(!key.matches("^axis0[0-2]$")){
+                throw new RuntimeException("invalid key regex. key = " + key);
+            }
+        });
+        params.keySet().forEach(key -> {
+            if(!params.get(key).contains(":")) {
+                throw new RuntimeException("invalid param regex. value = " + params.get(key));
+            }
+        });
     }
 }

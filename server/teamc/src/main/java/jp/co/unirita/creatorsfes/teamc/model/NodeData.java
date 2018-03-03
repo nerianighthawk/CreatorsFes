@@ -68,7 +68,6 @@ public class NodeData {
             }
         }
         axisValues.put(key, axisValue);
-        System.out.println(key);
     }
 
     public void nextAxis() {
