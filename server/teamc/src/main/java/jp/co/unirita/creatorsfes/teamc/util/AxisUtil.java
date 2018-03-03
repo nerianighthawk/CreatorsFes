@@ -21,6 +21,8 @@ public class AxisUtil {
         axisList = new ArrayList<>();
         String[] classNames = {
             "OverTimeMinutesAxis",
+            "GenderAxis",
+            "AgeAxis",
             "DepartmentAxis",
             "CompanyAxis", // DepartmentAxisの後
             "RankAxis",
