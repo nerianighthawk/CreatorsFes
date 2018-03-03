@@ -25,8 +25,8 @@ public class AxisUtil {
             "CompanyAxis", // DepartmentAxisの後
             "RankAxis",
             "MonthAxis",
-            "QuarterYearAxis", //MonthAxisの後
-            "HalfYearAxis", //MonthAxisの後
+            "QuarterAxis", //MonthAxisの後
+            "HalfAxis", //MonthAxisの後
             "YearAxis",
         };
         for(String className: classNames) {

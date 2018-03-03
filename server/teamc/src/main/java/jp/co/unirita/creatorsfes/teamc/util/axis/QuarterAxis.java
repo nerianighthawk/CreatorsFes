@@ -2,9 +2,9 @@ package jp.co.unirita.creatorsfes.teamc.util.axis;
 
 import jp.co.unirita.creatorsfes.teamc.model.Record;
 
-public class QuarterYearAxis extends Axis {
+public class QuarterAxis extends Axis {
 
-    public QuarterYearAxis() {
+    public QuarterAxis() {
         super("quarter");
     }
 

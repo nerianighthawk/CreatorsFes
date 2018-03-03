@@ -2,9 +2,9 @@ package jp.co.unirita.creatorsfes.teamc.util.axis;
 
 import jp.co.unirita.creatorsfes.teamc.model.Record;
 
-public class HalfYearAxis extends Axis {
+public class HalfAxis extends Axis {
 
-    public HalfYearAxis() {
+    public HalfAxis() {
         super("half");
     }
 
