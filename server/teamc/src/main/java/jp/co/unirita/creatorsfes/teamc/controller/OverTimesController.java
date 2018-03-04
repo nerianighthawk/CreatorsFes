@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import jp.co.unirita.creatorsfes.teamc.service.AxisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jp.co.unirita.creatorsfes.teamc.model.Master;
 import jp.co.unirita.creatorsfes.teamc.model.NodeData;
+import jp.co.unirita.creatorsfes.teamc.service.AxisService;
 import jp.co.unirita.creatorsfes.teamc.service.MasterService;
 import jp.co.unirita.creatorsfes.teamc.service.NodeService;
 
