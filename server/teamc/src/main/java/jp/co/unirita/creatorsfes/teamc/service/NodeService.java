@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,10 +50,21 @@ public class NodeService {
         return root;
     }
 
-    public Map<String, List<Double>> pileUp(int set, Map<String, String> params) throws Exception {
-        checkParams(params);
-        params.put("axis10", "month");
-        NodeData root = execute(params, false);
+    public Map<String, List<Double>> pileUp(int year, int set, Map<String, String> params) throws Exception {
+        NodeData root = new NodeData("ROOT", null);
+        root.setRecords(RecordCache.getRecordList()
+                .stream().filter(r -> {
+                    int month = Integer.parseInt(r.getParam("month"));
+                    if(1 <= month && month <= 3) {
+                        return r.getParam("year").equals(String.valueOf(year + 1));
+                    }
+                    return r.getParam("year").equals(String.valueOf(year));
+                }).collect(Collectors.toList()));
+        root.nextAxis();
+        params.keySet().stream().map(params::get).forEach(root::addAxis);
+        root.nextAxis();
+        root.addAxis("month");
+        root.close(false);
 
         Map<String, List<Double>> result = new TreeMap<>();
         Map<String, NodeData> children = root.getChildren();
@@ -64,7 +76,8 @@ public class NodeService {
             List<Double> list = new ArrayList<>();
             for (int i = 0; i < 12; i++) {
                 int month = (3 + i) % 12 + 1;
-                double average = data.get(String.format("month:%02d", month)).getResult().getAverage();
+                NodeData d = data.get(String.format("month:%02d", month));
+                double average = d == null ? 0 : d.getResult().getAverage();
                 if(i % set > 0){
                     average += list.get(i-1);
                 }
