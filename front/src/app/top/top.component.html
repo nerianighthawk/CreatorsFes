@@ -1,0 +1,7 @@
+<div class="top_content">
+    <div *ngFor="let department of departments">
+        <button mat-fab name="button" [ngStyle]="departmentStyle(department.id)">{{ department.name }}</button>
+    </div>
+    <button mat-fab name="button" class="department">営業部</button>
+    <button mat-fab name="button" class="department">総務部</button>
+</div>

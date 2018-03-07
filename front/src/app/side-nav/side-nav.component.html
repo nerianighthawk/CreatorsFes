@@ -1,0 +1,19 @@
+<mat-form-field class="side_item_margin">
+	<mat-select placeholder="年度" [(value)]="year">
+		<mat-option *ngFor="let year of years" [value]="year.value">
+			{{ year.value }}
+		</mat-option>
+	</mat-select>
+</mat-form-field>
+<br/>
+<mat-form-field class="side_item_margin">
+	<mat-select placeholder="集計対象" [(value)]="key">
+		<mat-option *ngFor="let month of months" [value]="month.value">
+			{{ month.value }}
+		</mat-option>
+	</mat-select>
+</mat-form-field>
+<br/>
+<div class="side_item_margin">
+	<button mat-raised-button (click)="display()">表示</button>
+</div>

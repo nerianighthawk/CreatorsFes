@@ -1,0 +1,19 @@
+<mat-toolbar>
+	<button mat-raised-button routerLink="/top" (click)="switch='top'">部署比較</button>
+	<button mat-raised-button routerLink="/analysis" (click)="switch='analysis'">分析</button>
+</mat-toolbar>
+<mat-drawer-container class="contents">
+	<mat-drawer class="side_content" mode="side" opened="true">
+		<div [ngSwitch]="switch">
+			<div *ngSwitchCase="'top'">
+				<app-side-nav></app-side-nav>
+			</div>
+			<div *ngSwitchCase="'analysis'">
+				<app-left-nav></app-left-nav>
+			</div>
+		</div>
+	</mat-drawer>
+	<mat-drawer-content class="main_content">
+		<router-outlet></router-outlet>
+	</mat-drawer-content>
+</mat-drawer-container>

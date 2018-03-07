@@ -1,0 +1,84 @@
+<mat-form-field class="side_item_margin">
+	<mat-select placeholder="年度">
+		<mat-option *ngFor="let year of years" [value]="year.value">
+			{{ year.value }}
+		</mat-option>
+	</mat-select>
+</mat-form-field>
+<br/>
+<mat-radio-group>
+	<mat-radio-button class="side_item_margin" value="1">半期ごと</mat-radio-button>
+	<mat-radio-button class="side_item_margin" value="2">四半期ごと</mat-radio-button>
+</mat-radio-group>
+<br/>
+<mat-tab-group>
+	<mat-tab label="部署">
+		<div class="analysis_tab_wrapper">
+			<mat-checkbox class="side_item_margin">開発部</mat-checkbox>
+			<br/>
+			<mat-checkbox class="side_item_margin">営業部</mat-checkbox>
+			<br/>
+			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
+			<br/>
+			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
+			<br/>
+			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
+			<br/>
+			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
+			<br/>
+			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
+			<br/>
+			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
+			<br/>
+			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
+			<br/>
+			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
+			<br/>
+			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
+			<br/>
+			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
+			<br/>
+			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
+			<br/>
+			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
+			<br/>
+			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
+			<br/>
+		</div>
+	</mat-tab>
+	<mat-tab label="個人">
+		<div class="analysis_tab_wrapper">
+			<mat-accordion>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							開発部
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+					<mat-checkbox>鈴木</mat-checkbox>
+					<br/>
+					<mat-checkbox>田中</mat-checkbox>
+					<br/>
+					<mat-checkbox>佐藤</mat-checkbox>
+					<br/>
+				</mat-expansion-panel>
+				<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							営業部
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+					<mat-checkbox>鈴木</mat-checkbox>
+					<br/>
+					<mat-checkbox>田中</mat-checkbox>
+					<br/>
+					<mat-checkbox>佐藤</mat-checkbox>
+					<br/>
+				</mat-expansion-panel>
+			</mat-accordion>
+		</div>
+	</mat-tab>
+</mat-tab-group>
+<div class="side_item_margin">
+	<button mat-raised-button>表示</button>
+</div>

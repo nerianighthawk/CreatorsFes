@@ -1,0 +1,10 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.contents {
+    height: calc(100vh - 80px);
+}
+
+.side_item_margin {
+    margin-left: 20px;
+    margin-right: 20px;
+}
