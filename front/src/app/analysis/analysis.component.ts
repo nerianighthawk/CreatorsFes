@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-analysis',
@@ -9,16 +11,18 @@ export class AnalysisComponent implements OnInit {
 
   public barChartOptions:any = {
     scaleShowVerticalLines: false,
-    responsive: true
+    responsive: true,
   };
   public barChartLabels:string[] = ['4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月', '1月', '2月', '3月'];
   public barChartType:string = 'bar';
   public barChartLegend:boolean = true;
 
-  public barChartData:any[] = [
-    {data: [65, 59, 80, 81, 56, 55, 40, 20, 50, 30, 24, 54], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90, 30, 40, 30, 30, 33], label: 'Series B'}
-  ];
+  public barChartData:any[];
+
+  public year: string;
+  public period: string;
+  public class: string;
+  public key: string[];
 
   // events
   public chartClicked(e:any):void {
@@ -29,9 +33,79 @@ export class AnalysisComponent implements OnInit {
     console.log(e);
   }
 
-  constructor() { }
+  constructor(
+    @Inject('ApiEndpoint') private api_path: string,
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
+    this.year = this.route.snapshot.params['year'];
+    this.period = this.route.snapshot.params['period'];
+    this.class = this.route.snapshot.params['class'];
+    this.key = this.route.snapshot.params['key'].split(':');
+    this.key.pop();
+    console.log(this.period);
+    let chartData: any;
+    this.http.get(this.api_path + "overtimes?axis00=" + this.class + "&axis10=year:" + this.year + "&axis20=month").subscribe(
+      json => {
+        for(let c in json['children']) {
+          for(let k of this.key) {
+            if(this.class + ':' + k == c){
+              let d = json['children'][c];
+              if(d.axisName == this.class){
+                console.log(d);
+                if(this.period == 'quarter'){
+                  chartData = {
+                    data: [
+                      d['children']['month:04']['result']['average'],
+                      d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'],
+                      d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'] + d['children']['month:06']['result']['average'],
+                      d['children']['month:07']['result']['average'],
+                      d['children']['month:07']['result']['average'] + d['children']['month:08']['result']['average'],
+                      d['children']['month:07']['result']['average'] + d['children']['month:08']['result']['average'] + d['children']['month:09']['result']['average'],
+                      d['children']['month:10']['result']['average'],
+                      d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'],
+                      d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'] + d['children']['month:12']['result']['average'],
+                      d['children']['month:01']['result']['average'],
+                      d['children']['month:01']['result']['average'] + d['children']['month:02']['result']['average'],
+                      d['children']['month:01']['result']['average'] + d['children']['month:02']['result']['average'] + d['children']['month:03']['result']['average'],
+                    ],
+                    label: d['axisValue'],
+                  }
+                } else if(this.period == 'half'){
+                  chartData = {
+                    data: [
+                      d['children']['month:04']['result']['average'],
+                      d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'],
+                      d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'] + d['children']['month:06']['result']['average'],
+                      d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'] + d['children']['month:06']['result']['average'] + d['children']['month:07']['result']['average'],
+                      d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'] + d['children']['month:06']['result']['average'] + d['children']['month:07']['result']['average'] + d['children']['month:08']['result']['average'],
+                      d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'] + d['children']['month:06']['result']['average'] + d['children']['month:07']['result']['average'] + d['children']['month:08']['result']['average'] + d['children']['month:09']['result']['average'],
+                      d['children']['month:10']['result']['average'],
+                      d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'],
+                      d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'] + d['children']['month:12']['result']['average'],
+                      d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'] + d['children']['month:12']['result']['average'] + d['children']['month:01']['result']['average'],
+                      d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'] + d['children']['month:12']['result']['average'] + d['children']['month:01']['result']['average'] + d['children']['month:02']['result']['average'],
+                      d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'] + d['children']['month:12']['result']['average'] + d['children']['month:01']['result']['average'] + d['children']['month:02']['result']['average'] + d['children']['month:03']['result']['average'],
+                    ],
+                    label: d['axisValue'],
+                  }
+                }
+                console.log(chartData);
+                if(this.barChartData){
+                  this.barChartData.push(chartData);
+                } else {
+                  this.barChartData = [chartData];
+                }
+                console.log(this.barChartData);
+              }
+            }
+          }
+        }
+      }
+    )
   }
 
 }

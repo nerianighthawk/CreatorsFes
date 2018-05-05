@@ -1,3 +1,4 @@
 .analysis_tab_wrapper {
     height: 300px;
+    overflow: auto;
 }

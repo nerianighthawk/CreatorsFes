@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { provideRoutes, RouterModule } from '@angular/router';
 import {
   MatInputModule,
@@ -12,10 +13,12 @@ import {
   MatTabsModule,
   MatExpansionModule,
   MatSidenavModule,
-} from '@angular/material'
+  MatListModule,
+  MatCardModule,
+} from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { O2ChartComponent, ChartConst } from 'o2-chart-lib';
 import { ChartsModule } from 'ng2-charts'
 import { TopComponent } from './top/top.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -27,7 +30,6 @@ import { LeftNavComponent } from './left-nav/left-nav.component';
 @NgModule({
   declarations: [
     AppComponent,
-    O2ChartComponent,
     TopComponent,
     SideNavComponent,
     AnalysisComponent,
@@ -37,6 +39,7 @@ import { LeftNavComponent } from './left-nav/left-nav.component';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    FormsModule,
     RouterModule,
     MatInputModule,
     MatButtonModule,
@@ -47,9 +50,14 @@ import { LeftNavComponent } from './left-nav/left-nav.component';
     MatExpansionModule,
     MatSidenavModule,
     MatTabsModule,
+    MatListModule,
+    MatCardModule,
     ChartsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {provide: 'ApiEndpoint', useValue: 'http://localhost:8080/api/v1/'},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

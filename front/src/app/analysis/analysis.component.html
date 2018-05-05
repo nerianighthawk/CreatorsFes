@@ -1,5 +1,5 @@
 <div class="analysis_content">
-  <div style="display: block">
+  <div style="display: block" *ngIf="barChartData">
     <canvas baseChart
             [datasets]="barChartData"
             [labels]="barChartLabels"

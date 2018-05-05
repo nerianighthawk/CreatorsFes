@@ -1,84 +1,52 @@
 <mat-form-field class="side_item_margin">
-	<mat-select placeholder="年度">
-		<mat-option *ngFor="let year of years" [value]="year.value">
-			{{ year.value }}
+	<mat-select placeholder="年度" [(value)]="term">
+		<mat-option *ngFor="let year of years" [value]="years">
+			{{ year }}
 		</mat-option>
 	</mat-select>
 </mat-form-field>
 <br/>
-<mat-radio-group>
-	<mat-radio-button class="side_item_margin" value="1">半期ごと</mat-radio-button>
-	<mat-radio-button class="side_item_margin" value="2">四半期ごと</mat-radio-button>
+<mat-radio-group [(ngModel)]="period">
+	<mat-radio-button class="side_item_margin" value="half">半期ごと</mat-radio-button>
+	<mat-radio-button class="side_item_margin" value="quarter">四半期ごと</mat-radio-button>
 </mat-radio-group>
 <br/>
-<mat-tab-group>
-	<mat-tab label="部署">
+<mat-radio-group [(ngModel)]="class">
+	<mat-radio-button class="side_item_margin" value="department">部署</mat-radio-button>
+	<mat-radio-button class="side_item_margin" value="user">個人</mat-radio-button>
+</mat-radio-group>
+<div *ngIf="class=='department'">
 		<div class="analysis_tab_wrapper">
-			<mat-checkbox class="side_item_margin">開発部</mat-checkbox>
-			<br/>
-			<mat-checkbox class="side_item_margin">営業部</mat-checkbox>
-			<br/>
-			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
-			<br/>
-			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
-			<br/>
-			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
-			<br/>
-			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
-			<br/>
-			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
-			<br/>
-			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
-			<br/>
-			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
-			<br/>
-			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
-			<br/>
-			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
-			<br/>
-			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
-			<br/>
-			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
-			<br/>
-			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
-			<br/>
-			<mat-checkbox class="side_item_margin">総務部</mat-checkbox>
+			<div *ngFor="let department of departments">
+				<mat-checkbox class="side_item_margin" [(ngModel)]="department.selected" [disabled]="department.disabled" (change)="dchanged()">{{ department.value }}</mat-checkbox>
+			</div>
 			<br/>
 		</div>
-	</mat-tab>
-	<mat-tab label="個人">
+	</div>
+<div *ngIf="class=='user'">
 		<div class="analysis_tab_wrapper">
+			<div *ngFor="let user of users">
+				<mat-checkbox class="side_item_margin" [(ngModel)]="user.selected" [disabled]="user.disabled" (change)="uchanged()">{{ user.value }}</mat-checkbox>
+			</div>
+			<!--
 			<mat-accordion>
-				<mat-expansion-panel>
-					<mat-expansion-panel-header>
-						<mat-panel-title>
-							開発部
-						</mat-panel-title>
-					</mat-expansion-panel-header>
-					<mat-checkbox>鈴木</mat-checkbox>
-					<br/>
-					<mat-checkbox>田中</mat-checkbox>
-					<br/>
-					<mat-checkbox>佐藤</mat-checkbox>
-					<br/>
-				</mat-expansion-panel>
-				<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-					<mat-expansion-panel-header>
-						<mat-panel-title>
-							営業部
-						</mat-panel-title>
-					</mat-expansion-panel-header>
-					<mat-checkbox>鈴木</mat-checkbox>
-					<br/>
-					<mat-checkbox>田中</mat-checkbox>
-					<br/>
-					<mat-checkbox>佐藤</mat-checkbox>
-					<br/>
-				</mat-expansion-panel>
+				<div *ngFor="let department of departments">
+					<mat-expansion-panel>
+						<mat-expansion-panel-header>
+							<mat-panel-title>
+								{{ department.value }}
+							</mat-panel-title>
+						</mat-expansion-panel-header>
+						<div *ngFor="let user of users">
+							<mat-checkbox>{{ user.value }}</mat-checkbox>
+							<br/>
+						</div>
+					</mat-expansion-panel>
+				</div>
 			</mat-accordion>
+		-->
 		</div>
-	</mat-tab>
-</mat-tab-group>
+</div>
 <div class="side_item_margin">
-	<button mat-raised-button>表示</button>
+	<button mat-raised-button (click)="display(this.target)">表示</button>
 </div>
