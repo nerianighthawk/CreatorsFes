@@ -38,6 +38,7 @@ export class LeftNavComponent implements OnInit {
       }
     }
     this.router.navigate(['analysis/' + this.term + '/' + this.period + '/'+ this.class + '/' + key]);
+    location.reload();
   }
 
   dchanged(): void {

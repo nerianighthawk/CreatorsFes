@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { MasterService } from '../service/master.service';
+
 @Component({
   selector: 'app-analysis',
   templateUrl: './analysis.component.html',
@@ -23,6 +25,8 @@ export class AnalysisComponent implements OnInit {
   public period: string;
   public class: string;
   public key: string[];
+  public loadPoint;
+  public count = 0;
 
   // events
   public chartClicked(e:any):void {
@@ -38,6 +42,7 @@ export class AnalysisComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
+    private master: MasterService,
   ) { }
 
   ngOnInit() {
@@ -46,8 +51,8 @@ export class AnalysisComponent implements OnInit {
     this.class = this.route.snapshot.params['class'];
     this.key = this.route.snapshot.params['key'].split(':');
     this.key.pop();
-    console.log(this.period);
     let chartData: any;
+    this.loadPoint = this.key.length;
     this.http.get(this.api_path + "overtimes?axis00=" + this.class + "&axis10=year:" + this.year + "&axis20=month").subscribe(
       json => {
         for(let c in json['children']) {
@@ -55,51 +60,54 @@ export class AnalysisComponent implements OnInit {
             if(this.class + ':' + k == c){
               let d = json['children'][c];
               if(d.axisName == this.class){
-                console.log(d);
-                if(this.period == 'quarter'){
-                  chartData = {
-                    data: [
-                      d['children']['month:04']['result']['average'],
-                      d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'],
-                      d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'] + d['children']['month:06']['result']['average'],
-                      d['children']['month:07']['result']['average'],
-                      d['children']['month:07']['result']['average'] + d['children']['month:08']['result']['average'],
-                      d['children']['month:07']['result']['average'] + d['children']['month:08']['result']['average'] + d['children']['month:09']['result']['average'],
-                      d['children']['month:10']['result']['average'],
-                      d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'],
-                      d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'] + d['children']['month:12']['result']['average'],
-                      d['children']['month:01']['result']['average'],
-                      d['children']['month:01']['result']['average'] + d['children']['month:02']['result']['average'],
-                      d['children']['month:01']['result']['average'] + d['children']['month:02']['result']['average'] + d['children']['month:03']['result']['average'],
-                    ],
-                    label: d['axisValue'],
+                this.master.getDepartment(d.axisValue, d.axisName).then(
+                  res => {
+                    if(this.period == 'quarter'){
+                      chartData = {
+                        data: [
+                          d['children']['month:04']['result']['average'],
+                          d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'],
+                          d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'] + d['children']['month:06']['result']['average'],
+                          d['children']['month:07']['result']['average'],
+                          d['children']['month:07']['result']['average'] + d['children']['month:08']['result']['average'],
+                          d['children']['month:07']['result']['average'] + d['children']['month:08']['result']['average'] + d['children']['month:09']['result']['average'],
+                          d['children']['month:10']['result']['average'],
+                          d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'],
+                          d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'] + d['children']['month:12']['result']['average'],
+                          d['children']['month:01']['result']['average'],
+                          d['children']['month:01']['result']['average'] + d['children']['month:02']['result']['average'],
+                          d['children']['month:01']['result']['average'] + d['children']['month:02']['result']['average'] + d['children']['month:03']['result']['average'],
+                        ],
+                        label: res,
+                      }
+                    } else if(this.period == 'half'){
+                      chartData = {
+                        data: [
+                          d['children']['month:04']['result']['average'],
+                          d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'],
+                          d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'] + d['children']['month:06']['result']['average'],
+                          d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'] + d['children']['month:06']['result']['average'] + d['children']['month:07']['result']['average'],
+                          d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'] + d['children']['month:06']['result']['average'] + d['children']['month:07']['result']['average'] + d['children']['month:08']['result']['average'],
+                          d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'] + d['children']['month:06']['result']['average'] + d['children']['month:07']['result']['average'] + d['children']['month:08']['result']['average'] + d['children']['month:09']['result']['average'],
+                          d['children']['month:10']['result']['average'],
+                          d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'],
+                          d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'] + d['children']['month:12']['result']['average'],
+                          d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'] + d['children']['month:12']['result']['average'] + d['children']['month:01']['result']['average'],
+                          d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'] + d['children']['month:12']['result']['average'] + d['children']['month:01']['result']['average'] + d['children']['month:02']['result']['average'],
+                          d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'] + d['children']['month:12']['result']['average'] + d['children']['month:01']['result']['average'] + d['children']['month:02']['result']['average'] + d['children']['month:03']['result']['average'],
+                        ],
+                        label: res,
+                      }
+                    }
+                    if(this.barChartData){
+                      this.barChartData.push(chartData);
+                    } else {
+                      this.barChartData = [chartData];
+                    }
+                    this.count++;
+                    console.log(this.barChartData);
                   }
-                } else if(this.period == 'half'){
-                  chartData = {
-                    data: [
-                      d['children']['month:04']['result']['average'],
-                      d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'],
-                      d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'] + d['children']['month:06']['result']['average'],
-                      d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'] + d['children']['month:06']['result']['average'] + d['children']['month:07']['result']['average'],
-                      d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'] + d['children']['month:06']['result']['average'] + d['children']['month:07']['result']['average'] + d['children']['month:08']['result']['average'],
-                      d['children']['month:04']['result']['average'] + d['children']['month:05']['result']['average'] + d['children']['month:06']['result']['average'] + d['children']['month:07']['result']['average'] + d['children']['month:08']['result']['average'] + d['children']['month:09']['result']['average'],
-                      d['children']['month:10']['result']['average'],
-                      d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'],
-                      d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'] + d['children']['month:12']['result']['average'],
-                      d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'] + d['children']['month:12']['result']['average'] + d['children']['month:01']['result']['average'],
-                      d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'] + d['children']['month:12']['result']['average'] + d['children']['month:01']['result']['average'] + d['children']['month:02']['result']['average'],
-                      d['children']['month:10']['result']['average'] + d['children']['month:11']['result']['average'] + d['children']['month:12']['result']['average'] + d['children']['month:01']['result']['average'] + d['children']['month:02']['result']['average'] + d['children']['month:03']['result']['average'],
-                    ],
-                    label: d['axisValue'],
-                  }
-                }
-                console.log(chartData);
-                if(this.barChartData){
-                  this.barChartData.push(chartData);
-                } else {
-                  this.barChartData = [chartData];
-                }
-                console.log(this.barChartData);
+                )
               }
             }
           }

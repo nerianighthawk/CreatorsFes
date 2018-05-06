@@ -57,7 +57,7 @@ export class SideNavComponent implements OnInit {
         this.key = m.key;
       }
     }
-    console.log(this.key)
     this.router.navigate(['top/' + this.term + '/' + this.key]);
+    location.reload();
   }
 }

@@ -1,5 +1,5 @@
 <div class="analysis_content">
-  <div style="display: block" *ngIf="barChartData">
+  <div style="display: block" *ngIf="count >= loadPoint">
     <canvas baseChart
             [datasets]="barChartData"
             [labels]="barChartLabels"

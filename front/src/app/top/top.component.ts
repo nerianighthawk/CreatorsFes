@@ -1,6 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import 'rxjs/add/operator/toPromise';
 import { Router, ActivatedRoute } from '@angular/router';
+
+import { MasterService } from '../service/master.service';
 
 @Component({
   selector: 'app-top',
@@ -18,7 +21,8 @@ export class TopComponent implements OnInit {
     @Inject('ApiEndpoint') private api_path: string,
     private http: HttpClient,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private master: MasterService,
   ) {}
 
   departmentStyle(dep: any) {
@@ -50,13 +54,18 @@ export class TopComponent implements OnInit {
         for(let c in json['children']) {
           let d = json['children'][c];
           if(d.axisName == "department"){
-            this.department = {
-              departmentId: d.axisValue,
-              average: d.result.average,
-              standardDeviation: d.result.standardDeviation,
-            }
-            console.log(this.department);
-            this.departments.push(this.department);
+            this.master.getDepartment(d.axisValue, d.axisName).then(
+              res => {
+                this.department = {
+                  departmentId: d.axisValue,
+                  departmentName: res,
+                  average: d.result.average,
+                  standardDeviation: d.result.standardDeviation,
+                }
+                console.log(this.department);
+                this.departments.push(this.department);
+              }
+            )
           }
         }
       }

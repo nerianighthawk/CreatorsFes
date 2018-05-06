@@ -1,10 +1,10 @@
 <mat-toolbar>
-	<button mat-raised-button routerLink="/top/2017/year" (click)="switch='top'">部署比較</button>
-	<button mat-raised-button routerLink="/analysis/2017/half/department/d00001:" (click)="switch='analysis'">分析</button>
+	<button mat-raised-button routerLink="/top/2017/year" (click)="display='top'">部署比較</button>
+	<button mat-raised-button routerLink="/analysis/2017/half/department/d00001:" (click)="display='analysis'">分析</button>
 </mat-toolbar>
 <mat-drawer-container class="contents">
 	<mat-drawer class="side_content" mode="side" opened="true">
-		<div [ngSwitch]="switch">
+		<div [ngSwitch]="display">
 			<div *ngSwitchCase="'top'">
 				<app-side-nav></app-side-nav>
 			</div>
